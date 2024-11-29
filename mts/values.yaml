@@ -1,5 +1,6 @@
 backend:
   name: backend
+  host: api.mts.shamps.dev
   port: 8000
   image:
     repository: shampiniony/mts-backend
