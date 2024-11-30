@@ -1,6 +1,7 @@
+namespace: mts
+
 global:
   email: team@shamps.dev
-  namespace: mts
 
 backend:
   name: backend
