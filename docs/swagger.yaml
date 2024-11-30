@@ -1,0 +1,45 @@
+definitions:
+  domain.PersonNode:
+    properties:
+      children:
+        items:
+          type: string
+        type: array
+      groupid:
+        type: string
+      groupname:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      jobtitle:
+        type: string
+      name:
+        type: string
+      parents:
+        items:
+          type: string
+        type: array
+      status:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /persons:
+    get:
+      description: Get a list of all persons
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.PersonNode'
+            type: array
+      summary: Retrieve all persons
+      tags:
+      - persons
+swagger: "2.0"
