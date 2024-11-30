@@ -7,14 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter(r *gin.Engine) {
-	engine := search.NewJSONEngine()
-
-	r.GET("/persons", func(c *gin.Context) {
-		c.JSON(http.StatusOK, engine.GetAll())
-	})
-
-	r.GET("/persons/filter", func(c *gin.Context) {
+func Filter(engine search.Engine) gin.HandlerFunc {
+	return func(c *gin.Context) {
 		var filters []search.Filter
 
 		if id := c.Query("id"); id != "" {
@@ -28,15 +22,5 @@ func SetupRouter(r *gin.Engine) {
 		}
 
 		c.JSON(http.StatusOK, engine.Filter(filters))
-	})
-
-	r.GET("/persons/search", func(c *gin.Context) {
-		text := c.Query("text")
-		if text == "" {
-			c.JSON(http.StatusBadRequest, gin.H{"message": "search query is empty"})
-			return
-		}
-
-		c.JSON(http.StatusOK, engine.Search(text))
-	})
+	}
 }

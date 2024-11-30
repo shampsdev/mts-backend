@@ -1,7 +1,7 @@
 package main
 
 import (
-	server "api.mts.shamps.dev/internal"
+	server "api.mts.shamps.dev/internal/server"
 	"github.com/gin-gonic/gin"
 )
 
