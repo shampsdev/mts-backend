@@ -1,3 +1,6 @@
+global:
+  email: team@shamps.dev
+
 backend:
   name: backend
   host: api.mts.shamps.dev
