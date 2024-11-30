@@ -6,7 +6,7 @@ type ContactInfo struct {
 }
 
 type Person struct {
-	ID            int         `json:"id"`
+	ID            string      `json:"id"`
 	Surname       string      `json:"surname"`
 	Name          string      `json:"name"`
 	MiddleNameRus string      `json:"middle_name_rus"`
@@ -15,7 +15,7 @@ type Person struct {
 	Contacts      ContactInfo `json:"contacts"`
 	WorkingHour   string      `json:"working_hour"`
 	Workplace     string      `json:"workplace"`
-	Head          *int        `json:"head"`
+	Head          *string     `json:"head"`
 	Department    string      `json:"department"`
 	Division      *string     `json:"division"`
 	Team          *string     `json:"team"`

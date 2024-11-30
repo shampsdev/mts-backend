@@ -108,10 +108,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "head": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "jobtitle": {
                     "type": "string"

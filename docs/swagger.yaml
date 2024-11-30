@@ -17,9 +17,9 @@ definitions:
       division:
         type: string
       head:
-        type: integer
+        type: string
       id:
-        type: integer
+        type: string
       jobtitle:
         type: string
       middle_name_rus:
