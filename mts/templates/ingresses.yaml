@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.backend.name }}-ingress
+  name: {{ .Values.backend.name }}
   labels:
     app: {{ .Values.backend.name }}
   namespace: default
@@ -17,7 +17,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ .Values.backend.name }}-service
+            name: {{ .Values.backend.name }}
             port:
               number: 80
         path: /
