@@ -3,18 +3,18 @@ package search
 import (
 	"log"
 
+	"api.mts.shamps.dev/external/adapter"
 	"api.mts.shamps.dev/internal/domain"
-	"api.mts.shamps.dev/internal/search/data"
 	"github.com/blevesearch/bleve/v2"
 )
 
-type JSONEngine struct {
+type BleveEngine struct {
 	persons map[string]*domain.Person
 	index   bleve.Index
 }
 
-func NewJSONEngine() *JSONEngine {
-	personsSlice := data.LoadPersons()
+func NewBleveEngine(a adapter.Adapter) *BleveEngine {
+	personsSlice := loadData(a)
 
 	persons := make(map[string]*domain.Person)
 	for _, person := range personsSlice {
@@ -34,13 +34,13 @@ func NewJSONEngine() *JSONEngine {
 		}
 	}
 
-	return &JSONEngine{
+	return &BleveEngine{
 		persons: persons,
 		index:   index,
 	}
 }
 
-func (e *JSONEngine) AllPersons() []*domain.Person {
+func (e *BleveEngine) AllPersons() []*domain.Person {
 	var result []*domain.Person
 	for _, person := range e.persons {
 		result = append(result, person)
@@ -48,7 +48,7 @@ func (e *JSONEngine) AllPersons() []*domain.Person {
 	return result
 }
 
-func (e *JSONEngine) SearchPersons(text string, filters []Filter) []*domain.Person {
+func (e *BleveEngine) SearchPersons(text string, filters []Filter) []*domain.Person {
 	query := bleve.NewQueryStringQuery(text)
 	searchRequest := bleve.NewSearchRequest(query)
 	searchResult, err := e.index.Search(searchRequest)

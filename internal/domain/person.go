@@ -16,6 +16,7 @@ type Person struct {
 	WorkingHour   string      `json:"working_hour"`
 	Workplace     string      `json:"workplace"`
 	Head          *string     `json:"head"`
+	Children      []string    `json:"children"`
 	Department    string      `json:"department"`
 	Division      *string     `json:"division"`
 	Team          *string     `json:"team"`
