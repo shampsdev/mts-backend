@@ -37,6 +37,90 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/persons/filter": {
+            "get": {
+                "description": "Filters persons based on query parameters like id, name, and status.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Filter persons based on query parameters",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Filter by ID",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by Name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by Status",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/domain.PersonNode"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/persons/search": {
+            "get": {
+                "description": "Search for persons using a text query",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Search for persons",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Text to search for",
+                        "name": "text",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/domain.PersonNode"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {

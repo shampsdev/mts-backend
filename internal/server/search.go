@@ -7,6 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Search godoc
+// @Summary Search for persons
+// @Description Search for persons using a text query
+// @Tags persons
+// @Produce json
+// @Param text query string true "Text to search for"
+// @Success 200 {array} domain.PersonNode
+// @Failure 400 {object} map[string]string "Bad Request"
+// @Router /persons/search [get]
 func Search(engine search.Engine) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		text := c.Query("text")
