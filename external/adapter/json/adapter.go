@@ -45,15 +45,15 @@ func convertToDomainPerson(p *Person) *domain.Person {
     }
 }
 
-func (ja *JsonAdapter) GetAll(data []byte) ([]domain.Person, error) {
+func (ja *JsonAdapter) GetAll(data []byte) ([]*domain.Person, error) {
     var persons []Person
     if err := json.Unmarshal(data, &persons); err != nil {
         return nil, fmt.Errorf("error unmarshalling JSON: %w", err)
     }
 
-    var result []domain.Person
+    var result []*domain.Person
     for _, person := range persons {
-        result = append(result, *convertToDomainPerson(&person))
+        result = append(result, convertToDomainPerson(&person))
     }
     return result, nil
 }
