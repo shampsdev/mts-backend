@@ -2,39 +2,41 @@ package server
 
 import (
 	"net/http"
-	"strconv"
 
+	"api.mts.shamps.dev/internal/search"
 	"github.com/gin-gonic/gin"
 )
 
-type Employee struct {
-	ID   int64  `json:"id"`
-	Name string `json:"name"`
-	Role string `json:"role"`
-}
-
-var employees = []Employee{
-	{ID: 1, Name: "John Doe", Role: "Software Engineer"},
-	{ID: 2, Name: "Jane Smith", Role: "Product Manager"},
-}
-
 func SetupRouter(r *gin.Engine) {
+	engine := search.NewJSONEngine()
 
-	r.GET("/employees", func(c *gin.Context) {
-		c.JSON(http.StatusOK, employees)
+	r.GET("/persons", func(c *gin.Context) {
+		c.JSON(http.StatusOK, engine.GetAll())
 	})
 
-	r.GET("/employees/:id", func(c *gin.Context) {
-		id, _ := strconv.ParseInt(c.Param("id"), 10, 64)
+	r.GET("/persons/filter", func(c *gin.Context) {
+		var filters []search.Filter
 
-		for _, employee := range employees {
-			if employee.ID == id {
-				c.JSON(http.StatusOK, employee)
-				return
-			}
+		if id := c.Query("id"); id != "" {
+			filters = append(filters, search.Filter{Key: "id", Val: id})
+		}
+		if name := c.Query("name"); name != "" {
+			filters = append(filters, search.Filter{Key: "name", Val: name})
+		}
+		if status := c.Query("status"); status != "" {
+			filters = append(filters, search.Filter{Key: "status", Val: status})
 		}
 
-		c.JSON(http.StatusNotFound, gin.H{"message": "employee not found"})
+		c.JSON(http.StatusOK, engine.Filter(filters))
 	})
 
+	r.GET("/persons/search", func(c *gin.Context) {
+		text := c.Query("text")
+		if text == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"message": "search query is empty"})
+			return
+		}
+
+		c.JSON(http.StatusOK, engine.Search(text))
+	})
 }
