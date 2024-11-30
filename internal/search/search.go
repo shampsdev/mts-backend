@@ -8,7 +8,6 @@ type Filter struct {
 }
 
 type Engine interface {
-	GetAll() []*domain.PersonNode
-	Filter(filters []Filter) []*domain.PersonNode
-	Search(text string) []*domain.PersonNode
+	AllPersons() []*domain.Person
+	SearchPersons(text string, filters []Filter) []*domain.Person
 }

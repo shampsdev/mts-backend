@@ -20,50 +20,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/domain.PersonNode"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/persons/filter": {
-            "get": {
-                "description": "Filters persons based on query parameters like id, name, and status.",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "persons"
-                ],
-                "summary": "Filter persons based on query parameters",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Filter by ID",
-                        "name": "id",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Filter by Name",
-                        "name": "name",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "Filter by Status",
-                        "name": "status",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/domain.PersonNode"
+                                "$ref": "#/definitions/domain.Person"
                             }
                         }
                     }
@@ -95,7 +52,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/domain.PersonNode"
+                                "$ref": "#/definitions/domain.Person"
                             }
                         }
                     },
@@ -113,40 +70,60 @@
         }
     },
     "definitions": {
-        "domain.PersonNode": {
+        "domain.ContactInfo": {
             "type": "object",
             "properties": {
-                "children": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "groupid": {
+                "email": {
                     "type": "string"
                 },
-                "groupname": {
+                "phone": {
                     "type": "string"
+                }
+            }
+        },
+        "domain.Person": {
+            "type": "object",
+            "properties": {
+                "about": {
+                    "type": "string"
+                },
+                "contacts": {
+                    "$ref": "#/definitions/domain.ContactInfo"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "division": {
+                    "type": "string"
+                },
+                "head": {
+                    "type": "integer"
                 },
                 "id": {
-                    "type": "string"
-                },
-                "image": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "jobtitle": {
+                    "type": "string"
+                },
+                "middle_name_rus": {
                     "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
-                "parents": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
                 "status": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                },
+                "team": {
+                    "type": "string"
+                },
+                "working_hour": {
+                    "type": "string"
+                },
+                "workplace": {
                     "type": "string"
                 }
             }

@@ -1,27 +1,40 @@
 definitions:
-  domain.PersonNode:
+  domain.ContactInfo:
     properties:
-      children:
-        items:
-          type: string
-        type: array
-      groupid:
+      email:
         type: string
-      groupname:
+      phone:
         type: string
+    type: object
+  domain.Person:
+    properties:
+      about:
+        type: string
+      contacts:
+        $ref: '#/definitions/domain.ContactInfo'
+      department:
+        type: string
+      division:
+        type: string
+      head:
+        type: integer
       id:
-        type: string
-      image:
-        type: string
+        type: integer
       jobtitle:
+        type: string
+      middle_name_rus:
         type: string
       name:
         type: string
-      parents:
-        items:
-          type: string
-        type: array
       status:
+        type: string
+      surname:
+        type: string
+      team:
+        type: string
+      working_hour:
+        type: string
+      workplace:
         type: string
     type: object
 info:
@@ -37,37 +50,9 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/domain.PersonNode'
+              $ref: '#/definitions/domain.Person'
             type: array
       summary: Retrieve all persons
-      tags:
-      - persons
-  /persons/filter:
-    get:
-      description: Filters persons based on query parameters like id, name, and status.
-      parameters:
-      - description: Filter by ID
-        in: query
-        name: id
-        type: string
-      - description: Filter by Name
-        in: query
-        name: name
-        type: string
-      - description: Filter by Status
-        in: query
-        name: status
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/domain.PersonNode'
-            type: array
-      summary: Filter persons based on query parameters
       tags:
       - persons
   /persons/search:
@@ -86,7 +71,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/domain.PersonNode'
+              $ref: '#/definitions/domain.Person'
             type: array
         "400":
           description: Bad Request

@@ -1,0 +1,173 @@
+[
+    {
+        "id": 1,
+        "surname": "Ivanov",
+        "name": "Ivan",
+        "middle_name_rus": "Ivanovich",
+        "jobtitle": "CEO",
+        "status": "active",
+        "contacts": {
+            "email": "ivanov.ceo@company.com",
+            "phone": "+123456789"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Head Office",
+        "head": null,
+        "department": "Management",
+        "division": null,
+        "team": null,
+        "about": "Chief Executive Officer of the company."
+    },
+    {
+        "id": 2,
+        "surname": "Petrov",
+        "name": "Petr",
+        "middle_name_rus": "Petrovich",
+        "jobtitle": "General Manager",
+        "status": "active",
+        "contacts": {
+            "email": "petrov.gm@company.com",
+            "phone": "+123456788"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Head Office",
+        "head": 1,
+        "department": "Sales",
+        "division": null,
+        "team": null,
+        "about": "Oversees the entire Sales department."
+    },
+    {
+        "id": 3,
+        "surname": "Sidorov",
+        "name": "Sidor",
+        "middle_name_rus": "Sidorovich",
+        "jobtitle": "Director",
+        "status": "active",
+        "contacts": {
+            "email": "sidorov.dir@company.com",
+            "phone": "+123456787"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Branch Office 1",
+        "head": 2,
+        "department": "Sales",
+        "division": "Corporate Sales",
+        "team": null,
+        "about": "Director of Corporate Sales division."
+    },
+    {
+        "id": 4,
+        "surname": "Nikolaev",
+        "name": "Nikolai",
+        "middle_name_rus": "Nikolaevich",
+        "jobtitle": "Director",
+        "status": "active",
+        "contacts": {
+            "email": "nikolaev.dir@company.com",
+            "phone": "+123456786"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Branch Office 2",
+        "head": 2,
+        "department": "Sales",
+        "division": "Retail Sales",
+        "team": null,
+        "about": "Director of Retail Sales division."
+    },
+    {
+        "id": 5,
+        "surname": "Smirnov",
+        "name": "Sergey",
+        "middle_name_rus": "Sergeevich",
+        "jobtitle": "Team Lead",
+        "status": "active",
+        "contacts": {
+            "email": "smirnov.lead@company.com",
+            "phone": "+123456785"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Branch Office 1",
+        "head": 3,
+        "department": "Sales",
+        "division": "Corporate Sales",
+        "team": "Key Accounts",
+        "about": "Team Lead for Key Accounts."
+    },
+    {
+        "id": 6,
+        "surname": "Fedorov",
+        "name": "Fedor",
+        "middle_name_rus": "Fedorovich",
+        "jobtitle": "Team Lead",
+        "status": "active",
+        "contacts": {
+            "email": "fedorov.lead@company.com",
+            "phone": "+123456784"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Branch Office 1",
+        "head": 3,
+        "department": "Sales",
+        "division": "Corporate Sales",
+        "team": "Client Relations",
+        "about": "Team Lead for Client Relations."
+    },
+    {
+        "id": 7,
+        "surname": "Kuznetsov",
+        "name": "Alexey",
+        "middle_name_rus": "Alexeevich",
+        "jobtitle": "Employee",
+        "status": "active",
+        "contacts": {
+            "email": "kuznetsov.emp@company.com",
+            "phone": "+123456783"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Branch Office 1",
+        "head": 5,
+        "department": "Sales",
+        "division": "Corporate Sales",
+        "team": "Key Accounts",
+        "about": "Employee in Key Accounts team."
+    },
+    {
+        "id": 8,
+        "surname": "Vasiliev",
+        "name": "Vasily",
+        "middle_name_rus": "Vasilievich",
+        "jobtitle": "Employee",
+        "status": "active",
+        "contacts": {
+            "email": "vasiliev.emp@company.com",
+            "phone": "+123456782"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Branch Office 1",
+        "head": 5,
+        "department": "Sales",
+        "division": "Corporate Sales",
+        "team": "Key Accounts",
+        "about": "Employee in Key Accounts team."
+    },
+    {
+        "id": 9,
+        "surname": "Pavlov",
+        "name": "Pavel",
+        "middle_name_rus": "Pavlovich",
+        "jobtitle": "Employee",
+        "status": "active",
+        "contacts": {
+            "email": "pavlov.emp@company.com",
+            "phone": "+123456781"
+        },
+        "working_hour": "9:00-18:00",
+        "workplace": "Branch Office 1",
+        "head": 6,
+        "department": "Sales",
+        "division": "Corporate Sales",
+        "team": "Key Accounts",
+        "about": "Employee in Key Accounts team."
+    }
+]

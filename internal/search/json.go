@@ -4,56 +4,24 @@ import (
 	"strings"
 
 	"api.mts.shamps.dev/internal/domain"
+	"api.mts.shamps.dev/internal/search/data"
 )
 
 type JSONEngine struct {
-	data []*domain.PersonNode
+	persons []*domain.Person
 }
 
 func NewJSONEngine() *JSONEngine {
-	return &JSONEngine{data: data}
+	return &JSONEngine{persons: data.LoadPersons()}
 }
 
-func (e *JSONEngine) GetAll() []*domain.PersonNode {
-	return e.data
+func (e *JSONEngine) AllPersons() []*domain.Person {
+	return e.persons
 }
 
-func (e *JSONEngine) Filter(filters []Filter) []*domain.PersonNode {
-	var results []*domain.PersonNode
-	for _, person := range e.data {
-		matches := true
-		for _, filter := range filters {
-			switch filter.Key {
-			case "id":
-				if person.ID != filter.Val {
-					matches = false
-				}
-			case "name":
-				if person.Name != filter.Val {
-					matches = false
-				}
-			case "status":
-				if person.Status != filter.Val {
-					matches = false
-				}
-			// Добавьте другие фильтры, если необходимо
-			default:
-				matches = false
-			}
-			if !matches {
-				break
-			}
-		}
-		if matches {
-			results = append(results, person)
-		}
-	}
-	return results
-}
-
-func (e *JSONEngine) Search(text string) []*domain.PersonNode {
-	var results []*domain.PersonNode
-	for _, person := range e.data {
+func (e *JSONEngine) SearchPersons(text string, filters []Filter) []*domain.Person {
+	var results []*domain.Person
+	for _, person := range e.persons {
 		if strings.Contains(person.Name, text) || strings.Contains(person.JobTitle, text) {
 			results = append(results, person)
 		}

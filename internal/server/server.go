@@ -12,7 +12,6 @@ func SetupRouter(r *gin.Engine) {
 	engine := search.NewJSONEngine()
 
 	r.GET("/persons", GetAll(engine))
-	r.GET("/persons/filter", Filter(engine))
 	r.GET("/persons/search", Search(engine))
 
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

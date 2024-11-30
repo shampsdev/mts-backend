@@ -13,7 +13,7 @@ import (
 // @Tags persons
 // @Produce json
 // @Param text query string true "Text to search for"
-// @Success 200 {array} domain.PersonNode
+// @Success 200 {array} domain.Person
 // @Failure 400 {object} map[string]string "Bad Request"
 // @Router /persons/search [get]
 func Search(engine search.Engine) gin.HandlerFunc {
@@ -24,6 +24,6 @@ func Search(engine search.Engine) gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, engine.Search(text))
+		c.JSON(http.StatusOK, engine.SearchPersons(text, []search.Filter{}))
 	}
 }
