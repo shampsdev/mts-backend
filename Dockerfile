@@ -1,15 +1,16 @@
-FROM python:3.11-alpine
-
-ENV PYTHONUNBUFFERED=1
-
-EXPOSE 8000
+FROM golang:1.23 AS builder
 
 WORKDIR /app
 
-COPY requirements.txt .
-
-RUN pip install -r requirements.txt
+COPY go.mod go.sum ./
+RUN go mod download
 
 COPY . .
 
-CMD [ "uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+RUN CGO_ENABLED=0 GOOS=linux go build -o main cmd/main.go
+
+FROM scratch AS prod
+
+COPY --from=builder /app/main /main
+
+CMD [ "/main" ]
