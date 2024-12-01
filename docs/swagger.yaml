@@ -24,6 +24,8 @@ definitions:
         type: string
       id:
         type: string
+      image:
+        type: string
       jobtitle:
         type: string
       middle_name_rus:
