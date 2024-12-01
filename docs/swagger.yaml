@@ -10,6 +10,10 @@ definitions:
     properties:
       about:
         type: string
+      children:
+        items:
+          type: string
+        type: array
       contacts:
         $ref: '#/definitions/domain.ContactInfo'
       department:
@@ -37,6 +41,31 @@ definitions:
       workplace:
         type: string
     type: object
+  domain.PersonNode:
+    properties:
+      children:
+        items:
+          type: string
+        type: array
+      groupid:
+        type: string
+      groupname:
+        type: string
+      id:
+        type: string
+      image:
+        type: string
+      jobtitle:
+        type: string
+      name:
+        type: string
+      parents:
+        items:
+          type: string
+        type: array
+      status:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -53,6 +82,29 @@ paths:
               $ref: '#/definitions/domain.Person'
             type: array
       summary: Retrieve all persons
+      tags:
+      - persons
+  /persons/nodes/{id}:
+    get:
+      description: Get a node by person id
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.PersonNode'
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Get a node by person id
       tags:
       - persons
   /persons/search:

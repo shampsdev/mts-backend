@@ -34,3 +34,19 @@ type PersonNode struct {
 	Children  []string `json:"children"`
 	Parents   []string `json:"parents"`
 }
+
+func PersonToNode(p *Person) *PersonNode {
+	node := &PersonNode{
+		ID:        p.ID,
+		Name:      p.Surname + " " + p.Name,
+		GroupID:   p.Department,
+		GroupName: p.Department,
+		Status:    p.Status,
+		JobTitle:  p.JobTitle,
+		Children:  p.Children,
+	}
+	if p.Head != nil {
+		node.Parents = []string{*p.Head}
+	}
+	return node
+}

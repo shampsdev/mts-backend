@@ -21,6 +21,7 @@ func SetupRouter(r *gin.Engine) {
 
 	r.GET("/persons", GetAll(engine))
 	r.GET("/persons/search", Search(engine))
+	r.GET("/persons/nodes/:id", NodeByID(engine))
 
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }

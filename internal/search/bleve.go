@@ -1,6 +1,7 @@
 package search
 
 import (
+	"errors"
 	"log"
 
 	"api.mts.shamps.dev/external/adapter"
@@ -19,6 +20,15 @@ func NewBleveEngine(a adapter.Adapter) *BleveEngine {
 	persons := make(map[string]*domain.Person)
 	for _, person := range personsSlice {
 		persons[person.ID] = person
+	}
+
+	for _, person := range persons {
+		if person.Head != nil {
+			parent, exists := persons[*person.Head]
+			if exists {
+				parent.Children = append(parent.Children, person.ID)
+			}
+		}
 	}
 
 	indexMapping := bleve.NewIndexMapping()
@@ -65,4 +75,15 @@ func (e *BleveEngine) SearchPersons(text string, filters []Filter) []*domain.Per
 	}
 
 	return results
+}
+
+var ErrNotFound = errors.New("person not found")
+
+func (e *BleveEngine) NodeByID(id string) (*domain.PersonNode, error) {
+	person, exists := e.persons[id]
+	if !exists {
+		return nil, ErrNotFound
+	}
+
+	return domain.PersonToNode(person), nil
 }
