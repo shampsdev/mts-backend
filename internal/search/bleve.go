@@ -60,8 +60,13 @@ func (e *BleveEngine) AllPersons() []*domain.Person {
 }
 
 func (e *BleveEngine) SearchPersons(text string, filters []Filter) []*domain.Person {
-	query := bleve.NewQueryStringQuery(text)
-	searchRequest := bleve.NewSearchRequest(query)
+	prefixQuery := bleve.NewPrefixQuery(text)
+	fuzzyQuery := bleve.NewFuzzyQuery(text)
+	fuzzyQuery.Fuzziness = 1
+
+	boolQuery := bleve.NewDisjunctionQuery(prefixQuery, fuzzyQuery)
+
+	searchRequest := bleve.NewSearchRequest(boolQuery)
 	searchResult, err := e.index.Search(searchRequest)
 	if err != nil {
 		log.Printf("Error searching for persons: %v", err)
