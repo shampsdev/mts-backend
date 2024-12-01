@@ -40,8 +40,8 @@ func PersonToNode(p *Person) *PersonNode {
 	node := &PersonNode{
 	  ID:        p.ID,
 	  Name:      p.Surname + " " + p.Name + " " + p.MiddleNameRus,
-	  GroupID:   p.Department,
-	  GroupName: p.Department,
+	  GroupID:   *p.Division,
+	  GroupName: *p.Division,
 	  Status:    p.Status,
 	  JobTitle:  p.JobTitle,
 	  Children:  p.Children,
