@@ -38,22 +38,29 @@ type PersonNode struct {
 
 func PersonToNode(p *Person) *PersonNode {
 	node := &PersonNode{
-		ID:        p.ID,
-		Name:      p.Surname + " " + p.Name + " " + p.MiddleNameRus,
-		GroupID:   p.Department,
-		GroupName: p.Department,
-		Status:    p.Status,
-		JobTitle:  p.JobTitle,
-		Children:  p.Children,
-		Parents:   []string{},
-		Image:     p.Image,
+	  ID:        p.ID,
+	  Name:      p.Surname + " " + p.Name + " " + p.MiddleNameRus,
+	  GroupID:   p.Department,
+	  GroupName: p.Department,
+	  Status:    p.Status,
+	  JobTitle:  p.JobTitle,
+	  Children:  p.Children,
+	  Parents:   []string{},
+	  Image:     p.Image,
 	}
+  
+	if node.Parents == nil || len(node.Parents) == 0 || (len(node.Parents) == 1 && node.Parents[0] == "") {
+	  node.Parents = []string{}
+	}
+  
+	if p.Head != nil && *p.Head != "" {
+	  node.Parents = []string{*p.Head}
+	}
+  
 	if node.Children == nil {
-		node.Children = []string{}
+	  node.Children = []string{}
 	}
-
-	if p.Head != nil {
-		node.Parents = []string{*p.Head}
-	}
+  
 	return node
-}
+  }
+  

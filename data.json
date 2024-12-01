@@ -14,8 +14,8 @@
         "workplace": "Head Office",
         "head": "27",
         "department": "IT",
-        "division": null,
-        "team": null,
+        "division": "",
+        "team": "",
         "about": "General Manager of the IT department.",
         "image": "https://storage.yandexcloud.net/dishash-s3/avatars/1.jpg"
     },
@@ -35,7 +35,7 @@
         "head": "1",
         "department": "IT",
         "division": "Analytics",
-        "team": null,
+        "team": "",
         "about": "Director of the Analytics division.",
         "image": "https://storage.yandexcloud.net/dishash-s3/avatars/2.jpg"
     },
@@ -55,7 +55,7 @@
         "head": "1",
         "department": "IT",
         "division": "Software Development",
-        "team": null,
+        "team": "",
         "about": "Director of Software Development (Team 1).",
         "image": "https://storage.yandexcloud.net/dishash-s3/avatars/3.jpg"
     },
@@ -75,7 +75,7 @@
         "head": "1",
         "department": "IT",
         "division": "Software Development",
-        "team": null,
+        "team": "",
         "about": "Director of Software Development (Team 2).",
         "image": "https://storage.yandexcloud.net/dishash-s3/avatars/4.jpg"
     },
@@ -95,7 +95,7 @@
         "head": "1",
         "department": "IT",
         "division": "Cybersecurity",
-        "team": null,
+        "team": "",
         "about": "Director of Cybersecurity (Team 1).",
         "image": "https://storage.yandexcloud.net/dishash-s3/avatars/5.jpg"
     },
@@ -115,7 +115,7 @@
         "head": "1",
         "department": "IT",
         "division": "Cybersecurity",
-        "team": null,
+        "team": "",
         "about": "Director of Cybersecurity (Team 2).",
         "image": "https://storage.yandexcloud.net/dishash-s3/avatars/6.jpg"
     },
