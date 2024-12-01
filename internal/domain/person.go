@@ -20,6 +20,7 @@ type Person struct {
 	Department    string      `json:"department"`
 	Division      *string     `json:"division"`
 	Team          *string     `json:"team"`
+	Image         string      `json:"image"`
 	About         string      `json:"about"`
 }
 
@@ -45,6 +46,7 @@ func PersonToNode(p *Person) *PersonNode {
 		JobTitle:  p.JobTitle,
 		Children:  p.Children,
 		Parents:   []string{},
+		Image:     p.Image,
 	}
 	if node.Children == nil {
 		node.Children = []string{}

@@ -19,5 +19,6 @@ type Person struct {
 	Department    string      `json:"department"`
 	Division      *string     `json:"division"`
 	Team          *string     `json:"team"`
+	Image         string      `json:"image"`
 	About         string      `json:"about"`
 }

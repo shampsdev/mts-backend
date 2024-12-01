@@ -41,6 +41,7 @@ func convertToDomainPerson(p *Person) *domain.Person {
 		Division:    p.Division,
 		Team:        p.Team,
 		About:       p.About,
+		Image:       p.Image,
 	}
 }
 
