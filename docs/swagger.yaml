@@ -86,6 +86,29 @@ paths:
       summary: Retrieve all persons
       tags:
       - persons
+  /persons/{id}:
+    get:
+      description: Get a person by person id
+      parameters:
+      - description: Person ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Person'
+        "404":
+          description: Not Found
+        "500":
+          description: Internal Server Error
+      summary: Get a person by person id
+      tags:
+      - persons
   /persons/nodes/{id}:
     get:
       description: Get a node by person id

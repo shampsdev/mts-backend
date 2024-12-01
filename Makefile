@@ -3,7 +3,7 @@ ifneq (,$(wildcard ./.env))
 	export
 endif
 
-TAG ?= 0.1.18
+TAG ?= 0.1.19
 IMG=shampiniony/mts-backend:$(TAG)
 
 docker-build:

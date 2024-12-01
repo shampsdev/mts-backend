@@ -113,6 +113,18 @@ func (e *BleveEngine) NodeByID(id string) (*domain.PersonNode, error) {
 	return domain.PersonToNode(person), nil
 }
 
+func (e *BleveEngine) PersonById(id string) (*domain.Person, error) {
+	log.Printf("PersonByID called with ID: %s", id)
+
+	person, exists := e.persons[id]
+	if !exists {
+		log.Printf("Person with ID %s not found", id)
+		return nil, ErrNotFound
+	}
+
+	return person, nil
+}
+
 func (e *BleveEngine) FindPathByIDs(from, to string) ([]*domain.PersonNode, error) {
 	lca, err := e.lessCommonAncestor(from, to)
 	if err != nil {

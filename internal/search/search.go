@@ -12,4 +12,5 @@ type Engine interface {
 	SearchPersons(text string, filters []Filter) ([]*domain.Person, error)
 	NodeByID(id string) (*domain.PersonNode, error)
 	FindPathByIDs(from, to string) ([]*domain.PersonNode, error)
+	PersonById(id string) (*domain.Person, error)
 }
