@@ -7,6 +7,7 @@ import (
 	"api.mts.shamps.dev/external/adapter"
 	"api.mts.shamps.dev/internal/domain"
 	"github.com/blevesearch/bleve/v2"
+	"github.com/blevesearch/bleve/v2/search/query"
 	"golang.org/x/exp/slices"
 )
 
@@ -59,28 +60,43 @@ func (e *BleveEngine) AllPersons() []*domain.Person {
 	return result
 }
 
-func (e *BleveEngine) SearchPersons(text string, filters []Filter) []*domain.Person {
+func (e *BleveEngine) SearchPersons(text string, filters []Filter) ([]*domain.Person, error) {
 	prefixQuery := bleve.NewPrefixQuery(text)
+
 	fuzzyQuery := bleve.NewFuzzyQuery(text)
 	fuzzyQuery.Fuzziness = 1
 
-	boolQuery := bleve.NewDisjunctionQuery(prefixQuery, fuzzyQuery)
+	translitQuery := bleve.NewFuzzyQuery(transliterate(text))
+	translitQuery.Fuzziness = 1
 
-	searchRequest := bleve.NewSearchRequest(boolQuery)
-	searchResult, err := e.index.Search(searchRequest)
+	query := bleve.NewDisjunctionQuery(prefixQuery, fuzzyQuery, translitQuery)
+
+	persons, err := e.findPersons(query)
+	if err != nil {
+		return nil, err
+	}
+
+	return persons, nil
+}
+
+func (e *BleveEngine) findPersons(q query.Query) ([]*domain.Person, error) {
+	sr := bleve.NewSearchRequest(q)
+	searchResult, err := e.index.Search(sr)
 	if err != nil {
 		log.Printf("Error searching for persons: %v", err)
-		return nil
+		return nil, err
 	}
+	return e.hitsToPersons(searchResult), nil
+}
 
-	results := make([]*domain.Person, 0, len(searchResult.Hits))
-	for _, hit := range searchResult.Hits {
+func (e *BleveEngine) hitsToPersons(sr *bleve.SearchResult) []*domain.Person {
+	persons := make([]*domain.Person, 0, len(sr.Hits))
+	for _, hit := range sr.Hits {
 		if person, exists := e.persons[hit.ID]; exists {
-			results = append(results, person)
+			persons = append(persons, person)
 		}
 	}
-
-	return results
+	return persons
 }
 
 var ErrNotFound = errors.New("person not found")

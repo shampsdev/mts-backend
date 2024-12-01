@@ -24,6 +24,11 @@ func Search(engine search.Engine) gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, engine.SearchPersons(text, []search.Filter{}))
+		persons, err := engine.SearchPersons(text, []search.Filter{})
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+			return
+		}
+		c.JSON(http.StatusOK, persons)
 	}
 }

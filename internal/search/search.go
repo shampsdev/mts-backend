@@ -9,7 +9,7 @@ type Filter struct {
 
 type Engine interface {
 	AllPersons() []*domain.Person
-	SearchPersons(text string, filters []Filter) []*domain.Person
+	SearchPersons(text string, filters []Filter) ([]*domain.Person, error)
 	NodeByID(id string) (*domain.PersonNode, error)
 	FindPathByIDs(from, to string) ([]*domain.PersonNode, error)
 }
