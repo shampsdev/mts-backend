@@ -27,6 +27,52 @@
                 }
             }
         },
+        "/persons/departments": {
+            "get": {
+                "description": "Get a list of all departments",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Retrieve all departments",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/persons/divisions": {
+            "get": {
+                "description": "Get a list of all divisions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Retrieve all divisions",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/persons/nodes/path": {
             "get": {
                 "description": "Find connection path between two persons by IDs",

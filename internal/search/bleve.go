@@ -61,22 +61,22 @@ func (e *BleveEngine) AllPersons() []*domain.Person {
 }
 
 func (e *BleveEngine) SearchPersons(text string, filters []Filter) ([]*domain.Person, error) {
-    prefixQuery := bleve.NewPrefixQuery(text)
-    fuzzyQuery := bleve.NewFuzzyQuery(text)
-    fuzzyQuery.Fuzziness = 2
-    translitQuery := bleve.NewFuzzyQuery(transliterate(text))
-    translitQuery.Fuzziness = 2
+	prefixQuery := bleve.NewPrefixQuery(text)
+	fuzzyQuery := bleve.NewFuzzyQuery(text)
+	fuzzyQuery.Fuzziness = 2
+	translitQuery := bleve.NewFuzzyQuery(transliterate(text))
+	translitQuery.Fuzziness = 2
 
-    fieldQuery := bleve.NewMatchQuery(text)
+	fieldQuery := bleve.NewMatchQuery(text)
 
-    query := bleve.NewDisjunctionQuery(prefixQuery, fuzzyQuery, translitQuery, fieldQuery)
+	query := bleve.NewDisjunctionQuery(prefixQuery, fuzzyQuery, translitQuery, fieldQuery)
 
-    persons, err := e.findPersons(query)
-    if err != nil {
-        return nil, err
-    }
+	persons, err := e.findPersons(query)
+	if err != nil {
+		return nil, err
+	}
 
-    return persons, nil
+	return persons, nil
 }
 
 func (e *BleveEngine) findPersons(q query.Query) ([]*domain.Person, error) {
@@ -125,6 +125,36 @@ func (e *BleveEngine) PersonById(id string) (*domain.Person, error) {
 	return person, nil
 }
 
+func (e *BleveEngine) AllDepartments() []string {
+	departments := make(map[string]struct{})
+	for _, person := range e.persons {
+		if person.Department != "" {
+			departments[person.Department] = struct{}{}
+		}
+	}
+
+	result := make([]string, 0, len(departments))
+	for department := range departments {
+		result = append(result, department)
+	}
+	return result
+}
+
+func (e *BleveEngine) AllDivisions() []string {
+	divisions := make(map[string]struct{})
+	for _, person := range e.persons {
+		if person.Division != nil && *person.Division != "" {
+			divisions[*person.Division] = struct{}{}
+		}
+	}
+
+	result := make([]string, 0, len(divisions))
+	for division := range divisions {
+		result = append(result, division)
+	}
+	return result
+}
+
 func (e *BleveEngine) FindPathByIDs(from, to string) ([]*domain.PersonNode, error) {
 	lca, err := e.lessCommonAncestor(from, to)
 	if err != nil {
@@ -155,65 +185,65 @@ func (e *BleveEngine) FindPathByIDs(from, to string) ([]*domain.PersonNode, erro
 }
 
 func (e *BleveEngine) personHeight(id string) (int, error) {
-    log.Printf("Calculating height for person ID: %s", id)
-    person, exists := e.persons[id]
-    if !exists {
-        log.Printf("Person with ID %s not found", id)
-        return 0, ErrNotFound
-    }
+	log.Printf("Calculating height for person ID: %s", id)
+	person, exists := e.persons[id]
+	if !exists {
+		log.Printf("Person with ID %s not found", id)
+		return 0, ErrNotFound
+	}
 
-    height := 0
-    parent := person.Head
-    for parent != nil && *parent != "" {
-        height++
-        log.Printf("Current height: %d, current parent ID: %s", height, *parent)
-        p, exists := e.persons[*parent]
-        if !exists {
-            log.Printf("Parent with ID %s not found", *parent)
-            return 0, ErrNotFound
-        }
-        parent = p.Head
-    }
+	height := 0
+	parent := person.Head
+	for parent != nil && *parent != "" {
+		height++
+		log.Printf("Current height: %d, current parent ID: %s", height, *parent)
+		p, exists := e.persons[*parent]
+		if !exists {
+			log.Printf("Parent with ID %s not found", *parent)
+			return 0, ErrNotFound
+		}
+		parent = p.Head
+	}
 
-    log.Printf("Final height for person ID %s: %d", id, height)
-    return height, nil
+	log.Printf("Final height for person ID %s: %d", id, height)
+	return height, nil
 }
 
 func (e *BleveEngine) lessCommonAncestor(from, to string) (string, error) {
-    log.Printf("Finding least common ancestor for IDs: from=%s, to=%s", from, to)
+	log.Printf("Finding least common ancestor for IDs: from=%s, to=%s", from, to)
 
-    hFrom, err := e.personHeight(from)
-    if err != nil {
-        log.Printf("Error calculating height for 'from' ID %s: %v", from, err)
-        return "", err
-    }
+	hFrom, err := e.personHeight(from)
+	if err != nil {
+		log.Printf("Error calculating height for 'from' ID %s: %v", from, err)
+		return "", err
+	}
 
-    hTo, err := e.personHeight(to)
-    if err != nil {
-        log.Printf("Error calculating height for 'to' ID %s: %v", to, err)
-        return "", err
-    }
+	hTo, err := e.personHeight(to)
+	if err != nil {
+		log.Printf("Error calculating height for 'to' ID %s: %v", to, err)
+		return "", err
+	}
 
-    log.Printf("Initial heights - from: %d, to: %d", hFrom, hTo)
+	log.Printf("Initial heights - from: %d, to: %d", hFrom, hTo)
 
-    for hFrom != hTo {
-        if hFrom > hTo {
-            log.Printf("Moving up from ID %s", from)
-            from = *e.persons[from].Head
-            hFrom--
-        } else {
-            log.Printf("Moving up to ID %s", to)
-            to = *e.persons[to].Head
-            hTo--
-        }
-    }
+	for hFrom != hTo {
+		if hFrom > hTo {
+			log.Printf("Moving up from ID %s", from)
+			from = *e.persons[from].Head
+			hFrom--
+		} else {
+			log.Printf("Moving up to ID %s", to)
+			to = *e.persons[to].Head
+			hTo--
+		}
+	}
 
-    for from != to {
-        log.Printf("Moving up both IDs: from=%s, to=%s", from, to)
-        from = *e.persons[from].Head
-        to = *e.persons[to].Head
-    }
+	for from != to {
+		log.Printf("Moving up both IDs: from=%s, to=%s", from, to)
+		from = *e.persons[from].Head
+		to = *e.persons[to].Head
+	}
 
-    log.Printf("Least common ancestor found: %s", from)
-    return from, nil
+	log.Printf("Least common ancestor found: %s", from)
+	return from, nil
 }

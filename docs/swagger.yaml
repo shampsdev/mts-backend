@@ -109,6 +109,36 @@ paths:
       summary: Get a person by person id
       tags:
       - persons
+  /persons/departments:
+    get:
+      description: Get a list of all departments
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Retrieve all departments
+      tags:
+      - persons
+  /persons/divisions:
+    get:
+      description: Get a list of all divisions
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Retrieve all divisions
+      tags:
+      - persons
   /persons/nodes/{id}:
     get:
       description: Get a node by person id

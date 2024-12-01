@@ -13,4 +13,6 @@ type Engine interface {
 	NodeByID(id string) (*domain.PersonNode, error)
 	FindPathByIDs(from, to string) ([]*domain.PersonNode, error)
 	PersonById(id string) (*domain.Person, error)
+	AllDepartments() []string
+	AllDivisions() []string
 }
