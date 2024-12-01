@@ -61,22 +61,22 @@ func (e *BleveEngine) AllPersons() []*domain.Person {
 }
 
 func (e *BleveEngine) SearchPersons(text string, filters []Filter) ([]*domain.Person, error) {
-	prefixQuery := bleve.NewPrefixQuery(text)
+    prefixQuery := bleve.NewPrefixQuery(text)
+    fuzzyQuery := bleve.NewFuzzyQuery(text)
+    fuzzyQuery.Fuzziness = 2
+    translitQuery := bleve.NewFuzzyQuery(transliterate(text))
+    translitQuery.Fuzziness = 2
 
-	fuzzyQuery := bleve.NewFuzzyQuery(text)
-	fuzzyQuery.Fuzziness = 1
+    fieldQuery := bleve.NewMatchQuery(text)
 
-	translitQuery := bleve.NewFuzzyQuery(transliterate(text))
-	translitQuery.Fuzziness = 1
+    query := bleve.NewDisjunctionQuery(prefixQuery, fuzzyQuery, translitQuery, fieldQuery)
 
-	query := bleve.NewDisjunctionQuery(prefixQuery, fuzzyQuery, translitQuery)
+    persons, err := e.findPersons(query)
+    if err != nil {
+        return nil, err
+    }
 
-	persons, err := e.findPersons(query)
-	if err != nil {
-		return nil, err
-	}
-
-	return persons, nil
+    return persons, nil
 }
 
 func (e *BleveEngine) findPersons(q query.Query) ([]*domain.Person, error) {
