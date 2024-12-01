@@ -38,7 +38,7 @@ type PersonNode struct {
 func PersonToNode(p *Person) *PersonNode {
 	node := &PersonNode{
 		ID:        p.ID,
-		Name:      p.Surname + " " + p.Name,
+		Name:      p.Surname + " " + p.Name + " " + p.MiddleNameRus,
 		GroupID:   p.Department,
 		GroupName: p.Department,
 		Status:    p.Status,

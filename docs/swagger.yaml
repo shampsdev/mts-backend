@@ -107,6 +107,36 @@ paths:
       summary: Get a node by person id
       tags:
       - persons
+  /persons/nodes/path:
+    get:
+      description: Find connection path between two persons by IDs
+      parameters:
+      - description: ID of the starting person
+        in: query
+        name: from
+        required: true
+        type: string
+      - description: ID of the target person
+        in: query
+        name: to
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.PersonNode'
+            type: array
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+      summary: Find path between two persons
+      tags:
+      - persons
   /persons/search:
     get:
       description: Search for persons using a text query

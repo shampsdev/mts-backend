@@ -38,6 +38,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/persons/nodes/path": {
+            "get": {
+                "description": "Find connection path between two persons by IDs",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "persons"
+                ],
+                "summary": "Find path between two persons",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID of the starting person",
+                        "name": "from",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ID of the target person",
+                        "name": "to",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/domain.PersonNode"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/persons/nodes/{id}": {
             "get": {
                 "description": "Get a node by person id",
