@@ -168,40 +168,40 @@ func (e *BleveEngine) personHeight(id string) (int, error) {
 }
 
 func (e *BleveEngine) lessCommonAncestor(from, to string) (string, error) {
-    log.Printf("Finding least common ancestor for IDs: from=%s, to=%s", from, to) // Логируем начало поиска
+    log.Printf("Finding least common ancestor for IDs: from=%s, to=%s", from, to)
 
     hFrom, err := e.personHeight(from)
     if err != nil {
-        log.Printf("Error calculating height for 'from' ID %s: %v", from, err) // Логируем ошибку при вычислении высоты
+        log.Printf("Error calculating height for 'from' ID %s: %v", from, err)
         return "", err
     }
 
     hTo, err := e.personHeight(to)
     if err != nil {
-        log.Printf("Error calculating height for 'to' ID %s: %v", to, err) // Логируем ошибку при вычислении высоты
+        log.Printf("Error calculating height for 'to' ID %s: %v", to, err)
         return "", err
     }
 
-    log.Printf("Initial heights - from: %d, to: %d", hFrom, hTo) // Логируем начальные высоты
+    log.Printf("Initial heights - from: %d, to: %d", hFrom, hTo)
 
     for hFrom != hTo {
         if hFrom > hTo {
-            log.Printf("Moving up from ID %s", from) // Логируем движение вверх по дереву
+            log.Printf("Moving up from ID %s", from)
             from = *e.persons[from].Head
             hFrom--
         } else {
-            log.Printf("Moving up to ID %s", to) // Логируем движение вверх по дереву
+            log.Printf("Moving up to ID %s", to)
             to = *e.persons[to].Head
             hTo--
         }
     }
 
     for from != to {
-        log.Printf("Moving up both IDs: from=%s, to=%s", from, to) // Логируем движение вверх до нахождения общего предка
+        log.Printf("Moving up both IDs: from=%s, to=%s", from, to)
         from = *e.persons[from].Head
         to = *e.persons[to].Head
     }
 
-    log.Printf("Least common ancestor found: %s", from) // Логируем найденного общего предка
+    log.Printf("Least common ancestor found: %s", from)
     return from, nil
 }
