@@ -102,8 +102,11 @@ func (e *BleveEngine) hitsToPersons(sr *bleve.SearchResult) []*domain.Person {
 var ErrNotFound = errors.New("person not found")
 
 func (e *BleveEngine) NodeByID(id string) (*domain.PersonNode, error) {
+	log.Printf("NodeByID called with ID: %s", id)
+
 	person, exists := e.persons[id]
 	if !exists {
+		log.Printf("Person with ID %s not found", id)
 		return nil, ErrNotFound
 	}
 
@@ -140,50 +143,65 @@ func (e *BleveEngine) FindPathByIDs(from, to string) ([]*domain.PersonNode, erro
 }
 
 func (e *BleveEngine) personHeight(id string) (int, error) {
-	person, exists := e.persons[id]
-	if !exists {
-		return 0, ErrNotFound
-	}
+    log.Printf("Calculating height for person ID: %s", id)
+    person, exists := e.persons[id]
+    if !exists {
+        log.Printf("Person with ID %s not found", id)
+        return 0, ErrNotFound
+    }
 
-	height := 0
-	parent := person.Head
-	for parent != nil {
-		height++
-		p, exists := e.persons[*parent]
-		if !exists {
-			return 0, ErrNotFound
-		}
-		parent = p.Head
-	}
+    height := 0
+    parent := person.Head
+    for parent != nil && *parent != "" {
+        height++
+        log.Printf("Current height: %d, current parent ID: %s", height, *parent)
+        p, exists := e.persons[*parent]
+        if !exists {
+            log.Printf("Parent with ID %s not found", *parent)
+            return 0, ErrNotFound
+        }
+        parent = p.Head
+    }
 
-	return height, nil
+    log.Printf("Final height for person ID %s: %d", id, height)
+    return height, nil
 }
 
 func (e *BleveEngine) lessCommonAncestor(from, to string) (string, error) {
-	hFrom, err := e.personHeight(from)
-	if err != nil {
-		return "", err
-	}
+    log.Printf("Finding least common ancestor for IDs: from=%s, to=%s", from, to) // Логируем начало поиска
 
-	hTo, err := e.personHeight(to)
-	if err != nil {
-		return "", err
-	}
+    hFrom, err := e.personHeight(from)
+    if err != nil {
+        log.Printf("Error calculating height for 'from' ID %s: %v", from, err) // Логируем ошибку при вычислении высоты
+        return "", err
+    }
 
-	for hFrom != hTo {
-		if hFrom > hTo {
-			from = *e.persons[from].Head
-			hFrom--
-		} else {
-			to = *e.persons[to].Head
-			hTo--
-		}
-	}
+    hTo, err := e.personHeight(to)
+    if err != nil {
+        log.Printf("Error calculating height for 'to' ID %s: %v", to, err) // Логируем ошибку при вычислении высоты
+        return "", err
+    }
 
-	for from != to {
-		from = *e.persons[from].Head
-		to = *e.persons[to].Head
-	}
+    log.Printf("Initial heights - from: %d, to: %d", hFrom, hTo) // Логируем начальные высоты
 
-	return from, nil
+    for hFrom != hTo {
+        if hFrom > hTo {
+            log.Printf("Moving up from ID %s", from) // Логируем движение вверх по дереву
+            from = *e.persons[from].Head
+            hFrom--
+        } else {
+            log.Printf("Moving up to ID %s", to) // Логируем движение вверх по дереву
+            to = *e.persons[to].Head
+            hTo--
+        }
+    }
+
+    for from != to {
+        log.Printf("Moving up both IDs: from=%s, to=%s", from, to) // Логируем движение вверх до нахождения общего предка
+        from = *e.persons[from].Head
+        to = *e.persons[to].Head
+    }
+
+    log.Printf("Least common ancestor found: %s", from) // Логируем найденного общего предка
+    return from, nil
 }
