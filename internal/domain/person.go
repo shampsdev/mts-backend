@@ -44,7 +44,12 @@ func PersonToNode(p *Person) *PersonNode {
 		Status:    p.Status,
 		JobTitle:  p.JobTitle,
 		Children:  p.Children,
+		Parents:   []string{},
 	}
+	if node.Children == nil {
+		node.Children = []string{}
+	}
+
 	if p.Head != nil {
 		node.Parents = []string{*p.Head}
 	}

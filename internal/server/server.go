@@ -19,6 +19,7 @@ func SetupRouter(r *gin.Engine) {
 	}
 	engine := search.NewBleveEngine(jsonAdapter)
 
+	r.Use(CORSMiddleware())
 	r.GET("/persons", GetAll(engine))
 	r.GET("/persons/search", Search(engine))
 	r.GET("/persons/nodes/:id", NodeByID(engine))
