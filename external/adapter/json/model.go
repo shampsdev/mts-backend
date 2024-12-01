@@ -9,7 +9,7 @@ type Person struct {
 	ID            string      `json:"id"`
 	Surname       string      `json:"surname"`
 	Name          string      `json:"name"`
-	MiddleNameRus string      `json:"middle_name_rus"`
+	MiddleName string         `json:"middle_name"`
 	JobTitle      string      `json:"jobtitle"`
 	Status        string      `json:"status"`
 	Contacts      ContactInfo `json:"contacts"`

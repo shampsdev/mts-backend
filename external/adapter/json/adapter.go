@@ -27,7 +27,7 @@ func convertToDomainPerson(p *Person) *domain.Person {
 		ID:            p.ID,
 		Surname:       p.Surname,
 		Name:          p.Name,
-		MiddleNameRus: p.MiddleNameRus,
+		MiddleNameRus: p.MiddleName,
 		JobTitle:      p.JobTitle,
 		Status:        p.Status,
 		Contacts: domain.ContactInfo{
