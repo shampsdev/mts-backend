@@ -121,8 +121,8 @@
     },
     {
         "id": "7",
-        "surname": "Lava",
-        "name": "Yasha",
+        "surname": "Harrison",
+        "name": "Paul",
         "middle_name": "",
         "jobtitle": "Team Lead of Development Team 1",
         "status": "On Vacation",
@@ -221,8 +221,8 @@
     },
     {
         "id": "12",
-        "surname": "Maglot",
-        "name": "Yasper",
+        "surname": "Lennon",
+        "name": "George",
         "middle_name": "",
         "jobtitle": "Scrum Master",
         "status": "Active",
@@ -521,8 +521,8 @@
     },
     {
         "id": "27",
-        "surname": "Mamut",
-        "name": "Rahal",
+        "surname": "Waters",
+        "name": "David",
         "middle_name": "",
         "jobtitle": "CEO of 'Maslyata'",
         "status": "Active",
@@ -1081,8 +1081,8 @@
     },
     {
         "id": "55",
-        "surname": "Trakhova",
-        "name": "Aminet",
+        "surname": "Gilmour",
+        "name": "Roger",
         "middle_name": "Valerievich",
         "jobtitle": "Team Lead",
         "status": "Active",
